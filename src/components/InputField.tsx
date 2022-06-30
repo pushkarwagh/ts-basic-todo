@@ -31,7 +31,7 @@ const InputField: React.FC<Props> = ({ todo, setTodo, handleAdd }) => {
                     className="input_submit"
                     type="submit"
                 >
-                    Ok
+                    Add
                 </button>
             </form>
 

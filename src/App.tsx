@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import InputField from './components/InputField';
 import TodoList from './components/TodoList';
@@ -6,11 +6,10 @@ import { Todo } from './model';
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 
 const App: React.FC = () => {
-
   const [todo, setTodo] = useState<string>("");
   const [todos, setTodos] = useState<Todo[]>([]);
   const [completedTodos, setCompletedTodos] = useState<Todo[]>([]);
-
+ 
   const handleAdd = (e: React.FormEvent) => {
     e.preventDefault();
     if (todo) {
@@ -42,9 +41,11 @@ const App: React.FC = () => {
     if (source.droppableId === "TodosList") {
       add = active[source.index];
       active.splice(source.index, 1);
+      add = {...add, isDone:true}
     } else {
       add = complete[source.index];
       complete.splice(source.index, 1);
+      add = {...add, isDone:false}      
     }
 
     // Destination Logic
@@ -53,9 +54,9 @@ const App: React.FC = () => {
     } else {
       complete.splice(destination.index, 0, add);
     }
-
+    
     setCompletedTodos(complete);
-    setTodos(active);
+    setTodos(active);    
   };
 
 
